@@ -4,9 +4,7 @@ data class Item(
     val id: String,
     val title: String,
     val price: Float,
-//    val condition: String,
     val thumbnail: String,
-//    val shipping: Shipping
 )
 
 data class Search(
