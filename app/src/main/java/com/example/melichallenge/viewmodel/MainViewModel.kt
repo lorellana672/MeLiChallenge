@@ -24,8 +24,6 @@ class MainViewModel: ViewModel() {
         result.enqueue(object : Callback<Search> {
             override fun onResponse(call: Call<Search>, response: Response<Search>) {
                 listData.add(response.body()!!)
-                Log.d("Busqueda", "valor: "+ response.body())
-                Log.d("Busqueda", "La lista tiene: "+ listData)
                 mutableData.value = listData
             }
             override fun onFailure(call: Call<Search>, t: Throwable) {

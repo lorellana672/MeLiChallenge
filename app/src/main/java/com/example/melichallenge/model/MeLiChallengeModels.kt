@@ -4,14 +4,14 @@ data class Item(
     val id: String,
     val title: String,
     val price: Float,
-    val thumbnail: String,
+    val thumbnail: String
 )
 
 data class Search(
     val site_id: String,
     val query: String,
     val paging: PagingInfo,
-    val results: List<Item>,
+    val results: List<Item>
 )
 
 data class PagingInfo(

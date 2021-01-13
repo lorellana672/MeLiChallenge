@@ -1,6 +1,7 @@
 package com.example.melichallenge.ui
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
@@ -24,6 +25,13 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val sharedPref = this.getSharedPreferences("last_search_key", Context.MODE_PRIVATE)
+        if (!(sharedPref.getString("last_search", "").equals(""))) {
+            observeData(sharedPref.getString("last_search", "")!!)
+            background.visibility = View.GONE
+        } else {
+            background.visibility = View.VISIBLE
+        }
         adapter = MainAdapter(this, this)
         rv.layoutManager = LinearLayoutManager(this)
         rv.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
@@ -31,7 +39,14 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
 
         inputText.setOnKeyListener(View.OnKeyListener { _, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
-                observeData(inputText.text.toString())
+                if (inputText.text.toString().trim() != "") {
+                    background.visibility = View.GONE
+                    with(sharedPref.edit()) {
+                        putString("last_search", inputText.text.toString())
+                        commit()
+                    }
+                    observeData(inputText.text.toString())
+                }
                 val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
                 inputMethodManager.hideSoftInputFromWindow(search_bar?.rootView?.windowToken, 0)
                 return@OnKeyListener true
@@ -43,6 +58,7 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
 
     //Que se llame cuando haga enter en el editText
     fun observeData(dato: String) {
+        shimmer_view_container.visibility = View.VISIBLE
         shimmer_view_container.startShimmer()
         viewModel.fetchSearchData(dato).observe(this, Observer {
             shimmer_view_container.stopShimmer()
