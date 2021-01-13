@@ -6,10 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.melichallenge.`interface`.OnItemClickListener
 import com.example.melichallenge.model.Item
 import kotlinx.android.synthetic.main.item_row.view.*
 
-class MainAdapter(private val context: Context) :
+class MainAdapter(private val context: Context, private val itemClick: OnItemClickListener) :
     RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
 
     private var dataList = mutableListOf<Item>()
@@ -38,6 +39,8 @@ class MainAdapter(private val context: Context) :
 
     inner class MainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindView(item: Item) {
+            itemView.setOnClickListener {   itemClick.onItemClick(item.id/*Aca va el id para referenciar al item en el fragment*/)  }
+            itemView.image_view.setOnClickListener { itemClick.onImgClick(item.thumbnail/*Aca va la lista de imagenes*/) }
             Glide.with(context).load(item.thumbnail.replaceFirst("http", "https"))
                 .into(itemView.image_view)
             itemView.txt_title.text = item.title
