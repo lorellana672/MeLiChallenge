@@ -6,7 +6,8 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
+import androidx.viewpager.widget.ViewPager
+import com.example.melichallenge.Adapters.PicturesAdapter
 import com.example.melichallenge.R
 import com.example.melichallenge.viewmodel.ItemViewModel
 import kotlinx.android.synthetic.main.activity_item.*
@@ -26,16 +27,29 @@ class ItemActivity : AppCompatActivity() {
     }
 
     fun observeData(dato: String) {
-        viewModel.fetchItemData(dato).observe(this, Observer {item->
-            item_title.setText(item.title)
-            item_price.setText("$" + item.price.toString())
-            viewModel.fetchItemDescription(item.id).observe(this, {desc->
-                item_des.setText(desc.plain_text)
-            })
-            viewModel.fetchItemPictures(item.id).observe(this, {picture->
-                Log.d("PASDAS", ""+picture)
-            })
+        var picList = ArrayList<String>()
+        viewModel.fetchItemData(dato).observe(this, Observer { item ->
+            if (item.error) {
+                error_img.visibility = View.VISIBLE
+                item_scroll_view.visibility = View.GONE
+                error_img.setBackgroundResource(R.drawable.error_bg)
+            } else {
+                item_title.setText(item.title)
+                item_price.setText("$" + item.price.toString())
+                viewModel.fetchItemDescription(item.id).observe(this, { desc ->
+                    item_des.setText(desc.plain_text)
+                })
+                viewModel.fetchItemPictures(item.id).observe(this, { picture ->
+                    Log.d("PASDAS", "" + picture)
 
-        })
+                    //Ver como obtener las imagenes y guardarlas en picList
+                    val viewPager = findViewById<ViewPager>(R.id.vp_item)
+                    mPicturesAdapter = PicturesAdapter(this, picList)
+                    viewPager.adapter = mPicturesAdapter
+
+                })
+
+            })
+        }
     }
 }

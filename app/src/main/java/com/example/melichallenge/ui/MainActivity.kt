@@ -12,7 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.melichallenge.MainAdapter
+import com.example.melichallenge.Adapters.MainAdapter
 import com.example.melichallenge.R
 import com.example.melichallenge.`interface`.OnItemClickListener
 import com.example.melichallenge.viewmodel.MainViewModel
@@ -49,7 +49,8 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
                     }
                     observeData(inputText.text.toString())
                 }
-                val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+                val inputMethodManager =
+                    getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
                 inputMethodManager.hideSoftInputFromWindow(search_bar?.rootView?.windowToken, 0)
                 return@OnKeyListener true
             }
@@ -68,10 +69,16 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
             shimmer_view_container.visibility = View.GONE //El hide no andaba.
             container_rv.visibility = View.VISIBLE
             it.forEach { item ->
-                //Para pasar los items de a 1. Mandar la lista no funciona
-                //solo muestraba el ultimo item.
-                adapter.setListData(item.results)
-                adapter.notifyDataSetChanged()
+                if (item.error) {
+                    background.visibility = View.VISIBLE
+                    container_rv.visibility = View.GONE
+                    background.setBackgroundResource(R.drawable.error_bg)
+                } else {
+                    //Para pasar los items de a 1. Mandar la lista no funciona
+                    //solo mostraba el ultimo item.
+                    adapter.setListData(item.results)
+                    adapter.notifyDataSetChanged()
+                }
             }
 
         })

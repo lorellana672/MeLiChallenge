@@ -4,21 +4,15 @@ data class Item(
     val id: String,
     val title: String,
     val price: Float,
-    val thumbnail: String
+    val thumbnail: String,
+    val error: Boolean
 )
 
 data class Search(
     val site_id: String,
     val query: String,
-    val paging: PagingInfo,
-    val results: List<Item>
-)
-
-data class PagingInfo(
-    val total: Int,
-    val offset: Int,
-    val limit: Int,
-    val primary_results: Int
+    val results: List<Item>,
+    val error: Boolean
 )
 
 data class PlainText(
@@ -29,6 +23,6 @@ data class Pictures(
     val url: String
 )
 
-data class ListOfPicturs(
+data class ListOfPictures(
     val pictures: List<Pictures>
 )

@@ -18,5 +18,5 @@ interface MeLiService {
     fun itemPlainText(@Path("item")item: String): Call<PlainText>
 
     @GET("/items/{item}?attributes=pictures")
-    fun itemImages(@Path("item")item: String): Call<ListOfPicturs>
+    fun itemImages(@Path("item")item: String): Call<ListOfPictures>
 }
