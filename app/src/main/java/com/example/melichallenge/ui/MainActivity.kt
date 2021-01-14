@@ -25,22 +25,24 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        adapter = MainAdapter(this, this)
+        rv.layoutManager = LinearLayoutManager(this)
+        rv.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+        rv.adapter = adapter
         val sharedPref = this.getSharedPreferences("last_search_key", Context.MODE_PRIVATE)
+        shimmer_view_container.visibility = View.GONE
         if (!(sharedPref.getString("last_search", "").equals(""))) {
             observeData(sharedPref.getString("last_search", "")!!)
             background.visibility = View.GONE
         } else {
             background.visibility = View.VISIBLE
         }
-        adapter = MainAdapter(this, this)
-        rv.layoutManager = LinearLayoutManager(this)
-        rv.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-        rv.adapter = adapter
 
         inputText.setOnKeyListener(View.OnKeyListener { _, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
                 if (inputText.text.toString().trim() != "") {
                     background.visibility = View.GONE
+                    container_rv.visibility = View.GONE
                     with(sharedPref.edit()) {
                         putString("last_search", inputText.text.toString())
                         commit()
@@ -64,6 +66,7 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
             shimmer_view_container.stopShimmer()
             shimmer_view_container.hideShimmer()
             shimmer_view_container.visibility = View.GONE //El hide no andaba.
+            container_rv.visibility = View.VISIBLE
             it.forEach { item ->
                 //Para pasar los items de a 1. Mandar la lista no funciona
                 //solo muestraba el ultimo item.

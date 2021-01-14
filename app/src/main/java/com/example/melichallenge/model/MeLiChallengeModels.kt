@@ -20,3 +20,15 @@ data class PagingInfo(
     val limit: Int,
     val primary_results: Int
 )
+
+data class PlainText(
+    val plain_text: String
+)
+
+data class Pictures(
+    val url: String
+)
+
+data class ListOfPicturs(
+    val pictures: List<Pictures>
+)
