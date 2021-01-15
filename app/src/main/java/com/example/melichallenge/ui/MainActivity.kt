@@ -89,4 +89,14 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
         intent.putExtra("id", id)
         startActivity(intent)
     }
+
+    override fun onImgClick(id: String) {
+        val fragment = PictureFragment.newInstance(id)
+        val manager = supportFragmentManager
+
+        val transaction = manager.beginTransaction()
+        transaction.replace(R.id.fragment,fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
 }
