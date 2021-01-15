@@ -24,7 +24,7 @@ class MainViewModel : ViewModel() {
         val result: Call<Search> = itemService.itemSearch(query)
         result.enqueue(object : Callback<Search> {
             override fun onResponse(call: Call<Search>, response: Response<Search>) {
-                if (response.isSuccessful) {
+                if (response.body()?.results  != null) {
                     listData.add(response.body()!!)
                     mutableData.value = listData
                 } else {

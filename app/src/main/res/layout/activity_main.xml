@@ -84,10 +84,5 @@
 
     </com.facebook.shimmer.ShimmerFrameLayout>
 
-    <FrameLayout
-        android:id="@+id/itemFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

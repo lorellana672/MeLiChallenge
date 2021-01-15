@@ -65,8 +65,9 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
         shimmer_view_container.startShimmer()
         viewModel.fetchSearchData(dato).observe(this, Observer {
             if (it == null) {
-                background.visibility = View.VISIBLE
                 container_rv.visibility = View.GONE
+                shimmer_view_container.visibility = View.GONE
+                background.visibility = View.VISIBLE
                 background.setBackgroundResource(R.drawable.error_bg)
             } else {
                 shimmer_view_container.stopShimmer()
@@ -86,12 +87,6 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
     override fun onItemClick(id: String) {
         val intent = Intent(this@MainActivity, ItemActivity::class.java)
         intent.putExtra("id", id)
-        startActivity(intent)
-    }
-
-    override fun onImgClick(img: String) {
-        val intent = Intent(this@MainActivity, ItemActivity::class.java)
-        intent.putExtra("data", img)
         startActivity(intent)
     }
 }

@@ -41,9 +41,6 @@ class MainAdapter(private val context: Context, private val itemClick: OnItemCli
     inner class MainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindView(item: Item) {
                 itemView.setOnClickListener { itemClick.onItemClick(item.id/*Aca va el id para referenciar al item en el fragment*/) }
-                itemView.image_view.setOnClickListener {
-                    itemClick.onImgClick(item.thumbnail/*Aca va la lista de imagenes*/)
-                }
                 Glide.with(context).load(item.thumbnail.replaceFirst("http", "https"))
                     .into(itemView.image_view)
                 itemView.txt_title.text = item.title

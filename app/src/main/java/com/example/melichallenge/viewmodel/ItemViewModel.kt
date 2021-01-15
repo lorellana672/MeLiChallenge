@@ -29,8 +29,7 @@ class ItemViewModel : ViewModel() {
             }
 
             override fun onResponse(call: Call<Item>, response: Response<Item>) {
-                if (response.isSuccessful) {
-                    Log.d("PASDAS", "response:  " + response.body())
+                if (response.body() != null) {
                     response.body().let {
                         mutableData.value = it
                     }

@@ -39,25 +39,18 @@ class ItemActivity : AppCompatActivity() {
                 item_scroll_view.visibility = View.GONE
                 error_img.setBackgroundResource(R.drawable.error_bg)
             } else {
-                item_title.setText(item.title)
-                item_price.setText("$" + item.price.toString())
-                viewModel.fetchItemDescription(item.id).observe(this, { desc ->
-                    item_des.setText(desc.plain_text)
-                })
                 viewModel.fetchItemPictures(item.id).observe(this, { picture ->
                     Log.d("PASDAS", "" + picture)
                     picture.forEach {
                         Log.d("PASDAS", "" + it.pictures)
                         adapter.setListData(it.pictures)
                         adapter.notifyDataSetChanged()
-//                        val viewPager = findViewById<ViewPager>(R.id.vp_item)
-//                        val mPicturesAdapter = PicturesAdapter(this, picList)
-//                        viewPager.adapter = mPicturesAdapter
                     }
-
-                    //Ver como obtener las imagenes y guardarlas en picList
-//
-
+                })
+                item_title.setText(item.title)
+                item_price.setText("$" + item.price.toString())
+                viewModel.fetchItemDescription(item.id).observe(this, { desc ->
+                    item_des.setText(desc.plain_text)
                 })
             }
         })
