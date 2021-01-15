@@ -4,15 +4,13 @@ data class Item(
     val id: String,
     val title: String,
     val price: Float,
-    val thumbnail: String,
-    val error: Boolean
+    val thumbnail: String
 )
 
 data class Search(
     val site_id: String,
     val query: String,
-    val results: List<Item>,
-    val error: Boolean
+    val results: List<Item>
 )
 
 data class PlainText(

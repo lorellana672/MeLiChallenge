@@ -6,9 +6,11 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
 import com.example.melichallenge.Adapters.PicturesAdapter
 import com.example.melichallenge.R
+import com.example.melichallenge.model.Pictures
 import com.example.melichallenge.viewmodel.ItemViewModel
 import kotlinx.android.synthetic.main.activity_item.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -16,10 +18,14 @@ import kotlinx.android.synthetic.main.activity_main.*
 class ItemActivity : AppCompatActivity() {
 
     private val viewModel by lazy { ViewModelProvider(this).get(ItemViewModel::class.java) }
+    private lateinit var adapter: PicturesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item)
+        adapter = PicturesAdapter(this)
+        hor_rv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        hor_rv.adapter = adapter
         if (intent.extras != null) {
             //Trae el id del item seleccionado
             intent.getStringExtra("id")?.let { observeData(it) }
@@ -27,9 +33,8 @@ class ItemActivity : AppCompatActivity() {
     }
 
     fun observeData(dato: String) {
-        var picList = ArrayList<String>()
         viewModel.fetchItemData(dato).observe(this, Observer { item ->
-            if (item.error) {
+            if (item == null) {
                 error_img.visibility = View.VISIBLE
                 item_scroll_view.visibility = View.GONE
                 error_img.setBackgroundResource(R.drawable.error_bg)
@@ -41,15 +46,20 @@ class ItemActivity : AppCompatActivity() {
                 })
                 viewModel.fetchItemPictures(item.id).observe(this, { picture ->
                     Log.d("PASDAS", "" + picture)
+                    picture.forEach {
+                        Log.d("PASDAS", "" + it.pictures)
+                        adapter.setListData(it.pictures)
+                        adapter.notifyDataSetChanged()
+//                        val viewPager = findViewById<ViewPager>(R.id.vp_item)
+//                        val mPicturesAdapter = PicturesAdapter(this, picList)
+//                        viewPager.adapter = mPicturesAdapter
+                    }
 
                     //Ver como obtener las imagenes y guardarlas en picList
-                    val viewPager = findViewById<ViewPager>(R.id.vp_item)
-                    mPicturesAdapter = PicturesAdapter(this, picList)
-                    viewPager.adapter = mPicturesAdapter
+//
 
                 })
-
-            })
-        }
+            }
+        })
     }
 }

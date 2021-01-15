@@ -11,7 +11,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainViewModel: ViewModel() {
+class MainViewModel : ViewModel() {
 
     fun fetchSearchData(query: String): LiveData<MutableList<Search>> {
         val mutableData = MutableLiveData<MutableList<Search>>()
@@ -19,19 +19,24 @@ class MainViewModel: ViewModel() {
         val listData = mutableListOf<Search>()
         //query para traer los datos
         val itemService: MeLiService = MeLiChallengeApiCall.getMeLiChallengeApiCall().create(
-            MeLiService::class.java)
+            MeLiService::class.java
+        )
         val result: Call<Search> = itemService.itemSearch(query)
         result.enqueue(object : Callback<Search> {
             override fun onResponse(call: Call<Search>, response: Response<Search>) {
-                listData.add(response.body()!!)
-                mutableData.value = listData
+                if (response.isSuccessful) {
+                    listData.add(response.body()!!)
+                    mutableData.value = listData
+                } else {
+                    mutableData.value = null
+                }
             }
+
             override fun onFailure(call: Call<Search>, t: Throwable) {
-                Log.d("Busqueda", "Error: " + t)
+                Log.d("ViewModel", "Error: " + t)
+                mutableData.value = null
             }
         })
-//            listData.add()
-        Log.d("Busqueda", "retorna al main" + mutableData)
         return mutableData
     }
 }
