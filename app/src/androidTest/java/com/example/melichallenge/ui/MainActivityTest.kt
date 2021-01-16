@@ -2,8 +2,7 @@ package com.example.melichallenge.ui
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
-import androidx.test.espresso.action.ViewActions.pressImeActionButton
-import androidx.test.espresso.action.ViewActions.typeText
+import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
@@ -41,7 +40,7 @@ class MainActivityTest {
         onView(withId(R.id.rv)).perform(
             RecyclerViewActions.actionOnItemAtPosition<MainAdapter.MainViewHolder>(
                 0,
-                ViewActions.click()
+                click()
             )
         )
         onView(withId(R.id.activity_item))

@@ -8,7 +8,6 @@ import com.example.melichallenge.`interface`.MeLiService
 import com.example.melichallenge.apicall.MeLiChallengeApiCall
 import com.example.melichallenge.model.Item
 import com.example.melichallenge.model.ListOfPictures
-import com.example.melichallenge.model.Pictures
 import com.example.melichallenge.model.PlainText
 import retrofit2.Call
 import retrofit2.Callback

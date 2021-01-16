@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class MeLiChallengeApiCall {
 
-    companion object{
+    companion object {
 
         fun getMeLiChallengeApiCall(): Retrofit {
             val interceptor = HttpLoggingInterceptor()

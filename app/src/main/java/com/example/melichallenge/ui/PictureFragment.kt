@@ -2,12 +2,9 @@ package com.example.melichallenge.ui
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
@@ -17,11 +14,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.melichallenge.Adapters.PicturesAdapter
 import com.example.melichallenge.R
 import com.example.melichallenge.viewmodel.ItemViewModel
-import kotlinx.android.synthetic.main.activity_item.*
 
 class PictureFragment : DialogFragment() {
 
-   private lateinit var id : String
+    private lateinit var id: String
     private val viewModel by lazy { ViewModelProvider(this).get(ItemViewModel::class.java) }
     private lateinit var adapter: PicturesAdapter
     private lateinit var mContext: Context

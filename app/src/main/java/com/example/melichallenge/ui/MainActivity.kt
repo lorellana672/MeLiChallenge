@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
         val manager = supportFragmentManager
 
         val transaction = manager.beginTransaction()
-        transaction.replace(R.id.fragment,fragment)
+        transaction.replace(R.id.fragment, fragment)
         transaction.addToBackStack(null)
         transaction.commit()
     }

@@ -7,13 +7,10 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager.widget.ViewPager
 import com.example.melichallenge.Adapters.PicturesAdapter
 import com.example.melichallenge.R
-import com.example.melichallenge.model.Pictures
 import com.example.melichallenge.viewmodel.ItemViewModel
 import kotlinx.android.synthetic.main.activity_item.*
-import kotlinx.android.synthetic.main.activity_main.*
 
 class ItemActivity : AppCompatActivity() {
 
@@ -40,9 +37,7 @@ class ItemActivity : AppCompatActivity() {
                 error_img.setBackgroundResource(R.drawable.error_bg)
             } else {
                 viewModel.fetchItemPictures(item.id).observe(this, { picture ->
-                    Log.d("PASDAS", "" + picture)
                     picture.forEach {
-                        Log.d("PASDAS", "" + it.pictures)
                         adapter.setListData(it.pictures)
                         adapter.notifyDataSetChanged()
                     }
